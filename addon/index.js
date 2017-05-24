@@ -9,6 +9,13 @@ const hasURL = typeof URL === 'function';
 const testURL = hasURL && new URL('http://example.com');
 
 export function needPolyfill() {
+
+  // in IE11, getting errorO
+  // Object.getOwnPropertyDescriptor(URL.prototype, 'search') Object.getOwnPropertyDescriptor: argument is not an Object
+  if (!URL.prototype) {
+    URL.prototype = Object.prototype;
+  }
+
   return !Object.getOwnPropertyDescriptor(URL.prototype, 'search') ||
     !hasURL ||
     !testURL.href;
